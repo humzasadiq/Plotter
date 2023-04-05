@@ -12,4 +12,3 @@ Features:(v0.1)
 To be added soon:
 1. Solving numericals with these vectors
 2. Better UI
-3. Reallife implementation of vectors(Missile Guidance System)
