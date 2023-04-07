@@ -11,6 +11,6 @@ Features:(v0.1)
 
 ![Alt Text](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2Q3YjVmNGIyYWEwMzlkZDI3NGNhNzJiODA1OWY0MTZiY2I3ZmRhNyZjdD1n/lFhrq1dbSUbAEOaQ7u/giphy.gif)
 
-Features:(v0.1)
+Features:(v0.5)
 * Added Unlimited vectors
 * Added Origin
