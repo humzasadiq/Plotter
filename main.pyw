@@ -128,7 +128,7 @@ def segmented_button_callback():
     global toplevel_window
     toplevel_window = customtkinter.CTkToplevel()
     toplevel_window.title('Vector Product')
-    toplevel_window.geometry('450x250')
+    toplevel_window.geometry('480x250')
     
     info_label = customtkinter.CTkLabel(
         master=toplevel_window, text='Enter the # of vectors to be Solved:', font=("Roboto", 20))
@@ -148,10 +148,11 @@ def segmented_button_callback():
                                     text="Calculate", font=('Roboto', 20), corner_radius=8, width=30,
                                     command=scalar_prod)
     prod.configure(fg_color='green')
-    prod.grid(row = 6, column = 1)
+    prod.grid(row = 6, column = 1, pady = 10)
 
     heading = customtkinter.CTkLabel(master = toplevel_window, text = 'The Scalar Product of the selected vectors will be:', font=("Roboto", 20))
-    heading.grid(row = 3,column = 1)
+    heading.grid(row = 3,column = 1, pady = 20)
+
 def scalar_prod():
 
     a = int(ventry1.get())
