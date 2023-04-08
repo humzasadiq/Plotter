@@ -15,6 +15,10 @@ Features:(v0.5)
 * Added Unlimited vectors
 * Added Origin
 
+Features:(v0.7)
+* Added Scalar Product
+* UI changes.
+
 Upcoming:
 * Portable .exe on v1 release
 * keybindings
