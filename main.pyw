@@ -1,9 +1,11 @@
+
 import matplotlib.pyplot as plt
 from tkinter import *
 import customtkinter
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("green")
+import random
 
 
 colors = ['Maroon', 'Red', 'Indigo', 'Aqua',
@@ -59,10 +61,11 @@ def add_vector():
     temp = click_count
 
 
+
 vectorss = [0]
 
 
-def plot_it():
+def plot_it(event=None):
     global click_count, noadd
 
     if ientry.get() == '':
@@ -91,6 +94,7 @@ def plot_it():
     else:
         ok = int(Okentry.get())
 
+    global scrol_update
     scrol_update = customtkinter.CTkLabel(master=scrollable_frame, text=(
         '({}). {} i + {} j + {} k ({})'.format(click_count, i, j, k, colors[click_count % len(colors)])), font=("Roboto", 15))
     scrol_update.pack(anchor=NW)
@@ -98,13 +102,11 @@ def plot_it():
     global u
     u = [i, j, k]
     vectorss.append(u)
-    import random
     start = [oi, oj, ok]
     ax.quiver(start[0], start[1], start[2], u[0],
               u[1], u[2], color=colors[click_count % len(colors)])
 
-    # color = colors[click_count % len(colors)]
-    # ax.text(u[0], u[1], u[2], f'({color})', fontsize=10)
+
     click_count += 1
 
 
@@ -123,13 +125,46 @@ def on_closing():
 
 
 def segmented_button_callback():
+    global toplevel_window
     toplevel_window = customtkinter.CTkToplevel()
     toplevel_window.title('Vector Product')
-    toplevel_window.geometry('400x200')
-
+    toplevel_window.geometry('450x250')
+    
     info_label = customtkinter.CTkLabel(
-        master=toplevel_window, text='Enter the # of vectors to be Solved', font=("Roboto", 20))
-    info_label.pack()
+        master=toplevel_window, text='Enter the # of vectors to be Solved:', font=("Roboto", 20))
+    info_label.grid(row = 1, column=1, pady =20, padx =20)
+
+    global ventry1
+    ventry1 = StringVar() 
+    vent1 = customtkinter.CTkEntry(master=toplevel_window, textvariable=ventry1, width=50, placeholder_text="1,2,3,...", corner_radius=10)
+    vent1.grid(row = 2, column = 1)
+    
+    global ventry2
+    ventry2 = StringVar()
+    vent2 = customtkinter.CTkEntry(master=toplevel_window, textvariable=ventry2, width=50, placeholder_text="1,2,3,...", corner_radius=10)
+    vent2.place(x = 140, y = 68)
+
+    prod = customtkinter.CTkButton(master=toplevel_window,
+                                    text="Calculate", font=('Roboto', 20), corner_radius=8, width=30,
+                                    command=scalar_prod)
+    prod.configure(fg_color='green')
+    prod.grid(row = 6, column = 1)
+
+    heading = customtkinter.CTkLabel(master = toplevel_window, text = 'The Scalar Product of the selected vectors will be:', font=("Roboto", 20))
+    heading.grid(row = 3,column = 1)
+def scalar_prod():
+
+    a = int(ventry1.get())
+    b = int(ventry2.get())
+    vec1 = customtkinter.CTkLabel(master = toplevel_window, text = 'Scalar Product = ({}) . ({})'.format(vectorss[a],vectorss[b]), font=("Roboto", 20))
+    vec1.grid(row = 4, column = 1)
+    for i in range(3):
+        x = []
+        x.append((vectorss[a][i]) * (vectorss[b][i]))
+    ans = sum(x)
+    vec2 = customtkinter.CTkLabel(master = toplevel_window, text = 'Scalar Product = {}'.format(ans), font=("Roboto", 20))
+    vec2.grid(row = 5, column = 1)
+
 
 
 temp = 0
@@ -159,6 +194,7 @@ ax.zaxis.set_pane_color((0.68, 0.68, 0.68, 0.68))
 ax.plot([0, 0], [0, 0], [-100, 100], color='#0c5daf', linewidth=1.5)
 ax.plot([0, 0], [-100, 100], [0, 0], color='#8776FF', linewidth=1.5)
 ax.plot([-100, 100], [0, 0], [0, 0], color='Green', linewidth=1.5)
+
 # Label the axes
 ax.set_xlabel('X')
 ax.set_ylabel('Y')
@@ -171,7 +207,7 @@ canvas.draw()
 canvas.get_tk_widget().pack(side='top')
 
 segemented_button = customtkinter.CTkButton(master=frame_interact,
-                                            text="Product", font=('Roboto', 20), corner_radius=10, width=30,
+                                            text="Product", font=('Roboto', 20), corner_radius=8, width=30,
                                             command=segmented_button_callback)
 segemented_button.pack(anchor=NW, pady=20)
 customtkinter.CTkLabel(master=frame_interact, text='Origin',
@@ -226,5 +262,6 @@ scrollable_frame2.pack()
 scrollable_frame = customtkinter.CTkScrollableFrame(
     master=frame_graph, width=700, height=200)
 scrollable_frame.pack(side='bottom')
+
 
 root.mainloop()
