@@ -1,4 +1,3 @@
-
 import matplotlib.pyplot as plt
 from tkinter import *
 import customtkinter
@@ -67,7 +66,7 @@ vectorss = [0]
 
 def plot_it(event=None):
     global click_count, noadd
-
+    
     if ientry.get() == '':
         i = 0
     else:
@@ -106,8 +105,11 @@ def plot_it(event=None):
     ax.quiver(start[0], start[1], start[2], u[0],
               u[1], u[2], color=colors[click_count % len(colors)])
 
+    has_been_called = True
+    
 
     click_count += 1
+has_been_called = False
 
 
 def slider_event(value, ax, fig):
@@ -127,8 +129,14 @@ def on_closing():
 def segmented_button_callback():
     global toplevel_window
     toplevel_window = customtkinter.CTkToplevel()
-    toplevel_window.title('Vector Product')
+    toplevel_window.title('Scalar Product')
     toplevel_window.geometry('480x250')
+    x = root.winfo_x()
+
+    y = root.winfo_y()
+
+    toplevel_window.geometry("+%d+%d" %(x+2,y+32))
+    toplevel_window.wm_transient(root)
     
     info_label = customtkinter.CTkLabel(
         master=toplevel_window, text='Enter the # of vectors to be Solved:', font=("Roboto", 20))
@@ -136,35 +144,37 @@ def segmented_button_callback():
 
     global ventry1
     ventry1 = StringVar() 
-    vent1 = customtkinter.CTkEntry(master=toplevel_window, textvariable=ventry1, width=50, placeholder_text="1,2,3,...", corner_radius=10)
-    vent1.grid(row = 2, column = 1)
+    vent1 = customtkinter.CTkEntry(master=toplevel_window, textvariable=ventry1, width=50,  placeholder_text="1,2,3,...", corner_radius=10)
+    vent1.place(x = 160, y = 68)
     
     global ventry2
     ventry2 = StringVar()
     vent2 = customtkinter.CTkEntry(master=toplevel_window, textvariable=ventry2, width=50, placeholder_text="1,2,3,...", corner_radius=10)
-    vent2.place(x = 140, y = 68)
+    vent2.place(x = 250, y = 68)
 
     prod = customtkinter.CTkButton(master=toplevel_window,
                                     text="Calculate", font=('Roboto', 20), corner_radius=8, width=30,
                                     command=scalar_prod)
     prod.configure(fg_color='green')
-    prod.grid(row = 6, column = 1, pady = 10)
+    prod.place(x = 200, y = 200)
 
-    heading = customtkinter.CTkLabel(master = toplevel_window, text = 'The Scalar Product of the selected vectors will be:', font=("Roboto", 20))
-    heading.grid(row = 3,column = 1, pady = 20)
-
+    def stay_on_top():
+        toplevel_window.lift()
+        toplevel_window.update()
+        toplevel_window.after(1, stay_on_top)
+    stay_on_top()
+    
 def scalar_prod():
-
     a = int(ventry1.get())
     b = int(ventry2.get())
     vec1 = customtkinter.CTkLabel(master = toplevel_window, text = 'Scalar Product = ({}) . ({})'.format(vectorss[a],vectorss[b]), font=("Roboto", 20))
-    vec1.grid(row = 4, column = 1)
+    vec1.place(x = 20, y = 110)
     for i in range(3):
         x = []
         x.append((vectorss[a][i]) * (vectorss[b][i]))
     ans = sum(x)
-    vec2 = customtkinter.CTkLabel(master = toplevel_window, text = 'Scalar Product = {}'.format(ans), font=("Roboto", 20))
-    vec2.grid(row = 5, column = 1)
+    vec2 = customtkinter.CTkLabel(master = toplevel_window, text = 'Scalar Product = {}'.format(ans),bg_color='Dark Green',font=("Roboto", 20))
+    vec2.place(x = 20, y = 140)
 
 
 
