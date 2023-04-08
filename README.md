@@ -14,3 +14,7 @@ Features:(v0.1)
 Features:(v0.5)
 * Added Unlimited vectors
 * Added Origin
+
+Upcoming:
+* Portable .exe on v1 release
+* keybindings
