@@ -169,8 +169,9 @@ def scalar_prod():
     b = int(ventry2.get())
     vec1 = customtkinter.CTkLabel(master = toplevel_window, text = 'Scalar Product = ({}) . ({})'.format(vectorss[a],vectorss[b]), font=("Roboto", 20))
     vec1.place(x = 20, y = 110)
+    
+    x = []
     for i in range(3):
-        x = []
         x.append((vectorss[a][i]) * (vectorss[b][i]))
     ans = sum(x)
     vec2 = customtkinter.CTkLabel(master = toplevel_window, text = 'Scalar Product = {}'.format(ans),bg_color='Dark Green',font=("Roboto", 20))
