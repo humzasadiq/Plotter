@@ -197,7 +197,7 @@ def segmented_button_callback():
 def scalar_prod():
     global vec2
     # Tried to remove/update the dot prod
-    dot = ax.scatter(0, 0, 0, alpha=0.75)
+    dot = ax.scatter(0, 0, alpha=0.75)
     dot.remove()
     a = int(ventry1.get()) 
     b = int(ventry2.get())
@@ -215,7 +215,7 @@ def scalar_prod():
     vec2.configure(text=f"Scalar Product = {ans}")
 
     #dot product plot
-    dot = ax.scatter(x[0], x[1], x[2], alpha=0.75)
+    dot = ax.scatter(ans, 0, alpha=0.75)
     #problem: update/detele on button press
     
 
