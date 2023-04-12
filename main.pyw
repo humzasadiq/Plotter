@@ -20,28 +20,28 @@ def add_vector():
             1000, lambda: Plot_button.configure(fg_color='green'))
     else:
         frameloop = customtkinter.CTkFrame(master=scrollable_frame2,
-                                           width=400,
+                                           width=300,
                                            height=100,
                                            fg_color='transparent')
         frameloop.pack(pady=10, padx=20)
 
         no = customtkinter.CTkLabel(master=frameloop,
                                     text='{}. '.format(click_count),
-                                    font=("Roboto", 25))
+                                    font=("Fixedsys", 20))
         no.grid(row=1, column=1)
 
         global ientry
         ientry = StringVar()
         ient = customtkinter.CTkEntry(master=frameloop,
                                       textvariable=ientry,
-                                      width=100,
+                                      width=50,
                                       placeholder_text="0",
                                       corner_radius=10)
         ient.grid(row=1, column=2)
 
         ilab = customtkinter.CTkLabel(master=frameloop,
                                       text=' i ',
-                                      font=("Roboto", 25),
+                                      font=("Fixedsys", 20),
                                       text_color='Green')
         ilab.grid(row=1, column=3)
 
@@ -49,14 +49,14 @@ def add_vector():
         jentry = StringVar()
         jent = customtkinter.CTkEntry(master=frameloop,
                                       textvariable=jentry,
-                                      width=100,
+                                      width=50,
                                       placeholder_text="0",
                                       corner_radius=10)
         jent.grid(row=1, column=4)
 
         jlab = customtkinter.CTkLabel(master=frameloop,
                                       text=' j ',
-                                      font=("Roboto", 25),
+                                      font=("Fixedsys", 20),
                                       text_color='#8776FF')
         jlab.grid(row=1, column=5)
 
@@ -64,13 +64,13 @@ def add_vector():
         kentry = StringVar()
         kent = customtkinter.CTkEntry(master=frameloop,
                                       textvariable=kentry,
-                                      width=100,
+                                      width=50,
                                       placeholder_text="0",
                                       corner_radius=10)
         kent.grid(row=1, column=6)
 
         klab = customtkinter.CTkLabel(master=frameloop, text=' k ',
-                                      font=("Roboto", 25),
+                                      font=("Fixedsys", 20),
                                       text_color='#0c5daf')
         klab.grid(row=1, column=7)
 
@@ -146,12 +146,12 @@ def segmented_button_callback():
     global toplevel_window
     toplevel_window = customtkinter.CTkToplevel()
     toplevel_window.title('Scalar Product')
-    toplevel_window.geometry('480x250')
+    toplevel_window.geometry('400x250')
 
     x = root.winfo_x()
     y = root.winfo_y()
 
-    toplevel_window.geometry("+%d+%d" %(x+2,y+32))
+    toplevel_window.geometry("+%d+%d" %(x+50,y+50))
     toplevel_window.wm_transient(root)
     info_label = customtkinter.CTkLabel(master=toplevel_window,
                                         text='Enter the # of vectors to be Solved:',
@@ -195,7 +195,7 @@ def segmented_button_callback():
     stay_on_top()
 
 def scalar_prod():
-    global vec2
+    global vec2 
     # Tried to remove/update the dot prod
     dot = ax.scatter(0, 0, alpha=0.75)
     dot.remove()
@@ -222,39 +222,35 @@ def scalar_prod():
 temp = 0
 click_count = 1
 root = customtkinter.CTk()
-root.geometry("1300x800")
+root.geometry("1000x700")
 root.title('3D Vector Plotting')
 root.protocol("WM_DELETE_WINDOW", on_closing)
 
 #left pannel
-frame_graph = customtkinter.CTkFrame(master=root,
-                                     fg_color='White',
-                                     width=600)
+frame_graph = customtkinter.CTkFrame(master=root, width=400)
 frame_graph.pack(side='left', fill="both")
 
 #right pannel
 frame_interact = customtkinter.CTkFrame(master=root,
                                         fg_color='transparent',
-                                        width=800)
+                                        width=350)
 frame_interact.pack(side='right', fill="both")
 
 slider = customtkinter.CTkSlider(master=frame_interact,
-                                 height=500,
-                                 width=30,
+                                 height=400,
+                                 width=20,
                                  from_=0,
                                  to=100,
-                                 progress_color='green',
                                  orientation=VERTICAL,
                                  command=lambda value:slider_event(value, ax, fig))
-slider.pack(side='left')
+slider.pack(side='left',padx=1)
 
 #===============================================================
-fig = plt.figure(figsize=(7,5), dpi=100)
+fig = plt.figure(figsize=(6,5), dpi=100)
 ax = fig.add_subplot(projection="3d")
-ax.xaxis.set_pane_color((0.9, 0.9, 0.9, 0.9))
-ax.yaxis.set_pane_color((0.9, 0.9, 0.9, 0.9))
 ax.zaxis.set_pane_color((0.68, 0.68, 0.68, 0.68))
 
+#x,y,z axes
 ax.plot([0, 0], [0, 0], [-100, 100], color='#0c5daf', linewidth=1.5)
 ax.plot([0, 0], [-100, 100], [0, 0], color='#8776FF', linewidth=1.5)
 ax.plot([-100, 100], [0, 0], [0, 0], color='Green', linewidth=1.5)
@@ -266,66 +262,64 @@ ax.set_zlabel('Z')
 ax.xaxis.label.set_color('Green')
 ax.yaxis.label.set_color('#8776FF')
 ax.zaxis.label.set_color('#0c5daf')
-ax.autoscale(enable=True, axis="both", tight=None)
-ax.autoscale_view(tight=None, scalex=True, scaley=True, scalez=True)
+#packing fig inside tkinter canvas
 canvas = FigureCanvasTkAgg(fig, master=frame_graph)
 controls = NavigationToolbar2Tk(canvas, frame_graph, pack_toolbar=False)
 controls.update()
-controls.pack(side=TOP, fill=X)
+
 canvas.draw()
-canvas.get_tk_widget().pack(side='top')
+canvas.get_tk_widget().pack(side=TOP, fill=BOTH)
+controls.pack(side=TOP, fill=BOTH)
 #==================================================================
 
 
 segemented_button = customtkinter.CTkButton(master=frame_interact,
                                             text="Product",
-                                            font=('Roboto', 20),
+                                            font=('Roboto', 18),
                                             corner_radius=8,
-                                            width=30,
+                                            width=25,
                                             command=segmented_button_callback)
 segemented_button.pack(anchor=NW, pady=20)
+
 customtkinter.CTkLabel(master=frame_interact,
                        text='Origin',
                        corner_radius=10,
-                       font=("Roboto", 15)).place(x=150, y=20)
+                       font=("Roboto", 15)).place(x=120, y=20)
 
 global Oientry
 Oientry = StringVar()
 Oient = customtkinter.CTkEntry(master=frame_interact,
                                textvariable=Oientry,
-                               width=30,
-                               placeholder_text="0",
+                               width=40,
                                corner_radius=10)
-Oient.place(x=210, y=20)
+Oient.place(x=180, y=20)
 Oilab = customtkinter.CTkLabel(master=frame_interact,
                                text=' i ',
                                font=("Roboto", 25),
                                text_color='Green')
-Oilab.place(x=240, y=20)
+Oilab.place(x=220, y=20)
 
 global Ojentry
 Ojentry = StringVar()
 Ojent = customtkinter.CTkEntry(master=frame_interact,
                                textvariable=Ojentry,
-                               width=30,
-                               placeholder_text="0",
+                               width=40,
                                corner_radius=10)
-Ojent.place(x=260, y=20)
+Ojent.place(x=240, y=20)
 
 Ojlab = customtkinter.CTkLabel(master=frame_interact,
                                text=' j ',
                                font=("Roboto", 25),
                                text_color='#8776FF')
-Ojlab.place(x=290, y=20)
+Ojlab.place(x=280, y=20)
 
 global Okentry
 Okentry = StringVar()
 Okent = customtkinter.CTkEntry(master=frame_interact,
                                textvariable=Okentry,
-                               width=30,
-                               placeholder_text="0",
+                               width=40,
                                corner_radius=10)
-Okent.place(x=310, y=20)
+Okent.place(x=300, y=20)
 
 Oklab = customtkinter.CTkLabel(master=frame_interact,
                                text=' k ',
@@ -334,14 +328,11 @@ Oklab = customtkinter.CTkLabel(master=frame_interact,
 Oklab.place(x=340, y=20)
 
 customtkinter.CTkLabel(master=frame_interact,
-                       text='<=Default:(0,0,0)',
+                       text='Default:(0,0,0)',
                        corner_radius=10,
-                       font=("Roboto", 15)).place(x=358, y=20)
+                       text_color='grey',
+                       font=("Roboto", 15)).place(x=120, y=48)
 
-label_Add = customtkinter.CTkLabel(master=frame_interact,
-                                   text='Add a new vector',
-                                   font=("Roboto", 25))
-label_Add.pack(side='top', padx=100, pady=10)
 
 Add_Button = customtkinter.CTkButton(master=frame_interact,
                                      text='+',
@@ -349,28 +340,26 @@ Add_Button = customtkinter.CTkButton(master=frame_interact,
                                      corner_radius=8,
                                      width=50,
                                      command=add_vector)
-Add_Button.pack(side='top', )
+Add_Button.pack(side='top', pady=10 )
 
 Plot_button = customtkinter.CTkButton(master=frame_interact,
-                                      height=100,
+                                      height=60,
                                       text='Plot',
                                       fg_color='green',
                                       font=('Roboto', 20),
                                       corner_radius=10,
-                                      width=200,
+                                      width=100,
                                       command=plot_it)
-Plot_button.pack(side='bottom', pady=15)
-
+Plot_button.pack(side='bottom', fill=BOTH)
 scrollable_frame2 = customtkinter.CTkScrollableFrame(master=frame_interact,
-                                                     width=700,
+                                                     width=400,
                                                      height=700)
 scrollable_frame2.pack()
 
-
 scrollable_frame = customtkinter.CTkScrollableFrame(master=frame_graph,
-                                                    width=700,
+                                                    width=300,
                                                     height=200)
-scrollable_frame.pack(side='bottom')
+scrollable_frame.place(x=0, y=543)
 
 
 root.mainloop()
