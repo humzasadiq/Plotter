@@ -2,7 +2,7 @@
 
 Graph Vector Plotting Application. 
   
-![plot](https://github.com/humzasadiq/Plotter/blob/main/media/plot.gif?raw=true)  
+![plot](https://github.com/humzasadiq/Plotter/blob/main/media/plt.gif?raw=true)  
   
 **Keybinds**  
 * Ctrl-+ = Add vector  
